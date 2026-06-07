@@ -176,7 +176,6 @@ const TechStack = () => {
 
   return (
     <div className="techstack">
-      <h2> My Techstack</h2>
 
       {window.innerWidth > 1024 && (
         <Canvas
@@ -219,6 +218,7 @@ const TechStack = () => {
       )}
 
       <div className="techstack-overlay">
+        <h2> My Techstack</h2>
         <div className="techstack-glass">
           <h3 className="glass-title">Tools &amp; Technologies</h3>
           <div className="skill-grid">
