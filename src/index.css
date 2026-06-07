@@ -122,6 +122,7 @@ body {
   left: 0;
   font-weight: 400;
   text-transform: uppercase;
+  z-index: 15;
 }
 
 @media screen and (min-width: 768px) {
