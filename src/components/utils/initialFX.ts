@@ -61,8 +61,9 @@ export function initialFX() {
       delay: 0.8,
     }
   );
+  gsap.set(".landing-buttons", { opacity: 0 });
   gsap.fromTo(
-    [".header", ".icons-section", ".nav-fade"],
+    [".header", ".icons-section", ".nav-fade", ".landing-buttons"],
     { opacity: 0 },
     {
       opacity: 1,

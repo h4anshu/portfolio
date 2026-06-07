@@ -3,7 +3,6 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
-import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 
 
@@ -76,18 +75,6 @@ const SocialIcons = () => {
           </a>
         </span>
       </div>
-      <a
-        className="resume-button"
-        href="/Data Analyst Intern.pdf"
-        target="_blank"
-        rel="noreferrer"
-        data-cursor="icons"
-      >
-        <span className="resume-text">RESUME</span>
-        <span className="resume-icon">
-          <TbNotes />
-        </span>
-      </a>
     </div>
   );
 };

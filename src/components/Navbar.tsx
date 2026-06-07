@@ -3,12 +3,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { useLoading } from "../context/LoadingProvider";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = () => {
+  const { isLoading } = useLoading();
+
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
 
@@ -22,7 +25,13 @@ const Navbar = () => {
       ignoreMobileResize: true,
     });
 
-    smoother.scrollTop(0);
+    const savedScroll = sessionStorage.getItem("smoother-scroll");
+    if (savedScroll) {
+      // Use scrollTo with smooth=false to instantly jump without interpolating the transform
+      smoother.scrollTo(parseInt(savedScroll, 10), false);
+    } else {
+      smoother.scrollTo(0, false);
+    }
 
     if (isMobile) {
       // On mobile, no loading screen — immediately enable scrolling and show content
@@ -36,39 +45,49 @@ const Navbar = () => {
         }
       });
     } else {
-      smoother.paused(true);
+      if (isLoading) {
+        smoother.paused(true);
+      } else {
+        smoother.paused(false);
+        document.body.style.overflowY = "auto";
+        document.getElementsByTagName("main")[0]?.classList.add("main-active");
+      }
     }
 
     let links = document.querySelectorAll(".header ul a");
+    const handleClick = (e: Event) => {
+      if (window.innerWidth > 1024) {
+        e.preventDefault();
+        let elem = e.currentTarget as HTMLAnchorElement;
+        let section = elem.getAttribute("data-href");
+        smoother.scrollTo(section, true, "top top");
+      }
+    };
+
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
-        }
-      });
+      elem.addEventListener("click", handleClick);
     });
-    window.addEventListener("resize", () => {
+
+    const handleResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      links.forEach((elem) => elem.removeEventListener("click", handleClick));
+      window.removeEventListener("resize", handleResize);
+      if (smoother) {
+        // Save current scroll position before killing
+        sessionStorage.setItem("smoother-scroll", smoother.scrollTop().toString());
+        smoother.kill();
+      }
+    };
   }, []);
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
           <span className="logo-brace">{"{"}  </span>A<span className="logo-dot">.</span>M<span className="logo-brace">  {"}"}  </span>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/anshu-mishra-797165374/"
-          className="navbar-connect"
-          data-cursor="disable"
-          target="_blank"
-          rel="noreferrer"
-        >
-          linkedin.com/in/anshu-mishra-797165374
         </a>
         <ul>
           <li>

@@ -135,3 +135,120 @@ body {
     font-size: 40px;
   }
 }
+
+/* ========== TechStack Glassmorphism Overlay ========== */
+.techstack-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 20px;
+}
+
+.techstack-glass {
+  pointer-events: auto;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  background: rgba(10, 14, 23, 0.55);
+  border: 1px solid rgba(94, 234, 212, 0.12);
+  border-radius: 24px;
+  padding: 44px 52px;
+  max-width: 580px;
+  width: 100%;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: glassSlideIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes glassSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.glass-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accentColor, #5eead4);
+  margin: 0 0 32px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(94, 234, 212, 0.15);
+}
+
+.skill-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.skill-category {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.skill-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accentColor, #5eead4);
+  min-width: 90px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: rgba(234, 229, 236, 0.9);
+  padding: 5px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.skill-tag:hover {
+  border-color: rgba(94, 234, 212, 0.4);
+  background: rgba(94, 234, 212, 0.08);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(94, 234, 212, 0.15);
+  transform: translateY(-1px);
+}
+
+@media screen and (max-width: 1200px) {
+  .techstack-glass {
+    padding: 32px 36px;
+    max-width: 480px;
+  }
+
+  .skill-label {
+    min-width: 75px;
+    font-size: 11px;
+  }
+
+  .skill-tag {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}

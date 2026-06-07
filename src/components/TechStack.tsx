@@ -215,6 +215,48 @@ const TechStack = () => {
           <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
         </EffectComposer>
       </Canvas>
+
+      <div className="techstack-overlay">
+        <div className="techstack-glass">
+          <h3 className="glass-title">Tools &amp; Technologies</h3>
+          <div className="skill-grid">
+            <div className="skill-category">
+              <span className="skill-label">Languages</span>
+              <div className="skill-tags">
+                <span className="skill-tag">Python</span>
+                <span className="skill-tag">SQL</span>
+                <span className="skill-tag">MySQL</span>
+              </div>
+            </div>
+            <div className="skill-category">
+              <span className="skill-label">BI &amp; Viz</span>
+              <div className="skill-tags">
+                <span className="skill-tag">Power BI</span>
+                <span className="skill-tag">DAX</span>
+                <span className="skill-tag">Tableau</span>
+                <span className="skill-tag">Excel</span>
+              </div>
+            </div>
+            <div className="skill-category">
+              <span className="skill-label">ML &amp; AI</span>
+              <div className="skill-tags">
+                <span className="skill-tag">Scikit-learn</span>
+                <span className="skill-tag">XGBoost</span>
+                <span className="skill-tag">Extra Trees</span>
+              </div>
+            </div>
+            <div className="skill-category">
+              <span className="skill-label">Data</span>
+              <div className="skill-tags">
+                <span className="skill-tag">Pandas</span>
+                <span className="skill-tag">NumPy</span>
+                <span className="skill-tag">SQLAlchemy</span>
+                <span className="skill-tag">Streamlit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
