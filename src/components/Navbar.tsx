@@ -10,18 +10,34 @@ export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
       content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
+      smooth: isMobile ? 1 : 1.7,
+      speed: isMobile ? 1 : 1.7,
+      effects: !isMobile,
       autoResize: true,
       ignoreMobileResize: true,
     });
 
     smoother.scrollTop(0);
-    smoother.paused(true);
+
+    if (isMobile) {
+      // On mobile, no loading screen — immediately enable scrolling and show content
+      document.body.style.overflowY = "auto";
+      smoother.paused(false);
+      document.getElementsByTagName("main")[0]?.classList.add("main-active");
+      // Run initial text animations after a short delay
+      import("./utils/initialFX").then((module) => {
+        if (module.initialFX) {
+          setTimeout(() => module.initialFX(), 300);
+        }
+      });
+    } else {
+      smoother.paused(true);
+    }
 
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
