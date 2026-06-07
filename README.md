@@ -1,8 +1,6 @@
-# 3D Portfolio Website
+# Anshu | Data Science & ML Portfolio
 
-This repository contains the source code for a personal 3D portfolio built with React, TypeScript, Three.js, React Three Fiber, and GSAP. It includes animated page sections, a character scene, custom cursor interactions, and smooth transitions designed for a modern portfolio experience.
-
-Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.app/)
+This repository contains the source code for my interactive, 3D personal portfolio built with React, TypeScript, Three.js, React Three Fiber, and GSAP. It showcases my data science, machine learning, and BI projects through animated page sections, a custom 3D character scene, and smooth transitions designed for a modern storytelling experience.
 
 ![Portfolio Preview](public/images/preview1.png)
 
@@ -12,41 +10,31 @@ Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Available Scripts](#available-scripts)
-- [GSAP License Note](#gsap-license-note)
-- [Customization Guide](#customization-guide)
-- [Troubleshooting](#troubleshooting)
 - [Deployment](#deployment)
-- [License](#license)
 
 ## Features
 
-- Responsive one-page portfolio layout with reusable section components.
-- 3D character scene rendering powered by React Three Fiber and Three.js.
-- GSAP-powered animations and transitions for interactive storytelling.
-- Custom cursor, hover interactions, and scroll-driven visual effects.
-- Organized component architecture with dedicated utilities and style modules.
+- **Data Science Showcase**: Dedicated sections highlighting end-to-end ML, ETL, and BI projects (e.g., Crop Yield Prediction, E-Commerce Sales Analysis).
+- **Interactive 3D Experience**: A custom 3D character scene rendering powered by React Three Fiber and Three.js.
+- **GSAP Animations**: Fluid scroll-driven animations and transitions for interactive storytelling.
+- **Responsive Layout**: One-page portfolio layout optimized for desktop, tablet, and mobile viewing.
+- **Custom Aesthetic**: Unique "manifesto-style" typography, glassmorphism, and dark-mode color palettes tailored for a premium data science aesthetic.
 
 ## Tech Stack
 
-### Core
-
+### Frontend & Core
 - React 18
 - TypeScript
 - Vite
 
-### Animation and 3D
-
+### Animation & 3D Environment
 - GSAP + `@gsap/react`
 - Three.js
 - `@react-three/fiber`
 - `@react-three/drei`
 - `@react-three/postprocessing`
-- `@react-three/cannon`
-- `@react-three/rapier`
 
 ### Supporting Libraries
-
 - `react-icons`
 - `react-fast-marquee`
 - `@vercel/analytics`
@@ -55,23 +43,20 @@ Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.
 
 ```text
 .
-├── public/                    # Static assets
+├── public/                    # Static assets (3D models, project screenshots)
 ├── src/
 │   ├── assets/                # Local media/assets
 │   ├── components/
 │   │   ├── Character/         # 3D scene + character logic/utilities
 │   │   ├── styles/            # Section/component CSS files
-│   │   ├── About.tsx
-│   │   ├── Career.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Landing.tsx
+│   │   ├── About.tsx          # Personal manifesto and bio
+│   │   ├── Career.tsx         # Education and experience timeline
+│   │   ├── Contact.tsx        # Contact links and resume
+│   │   ├── Landing.tsx        # Hero section
 │   │   ├── MainContainer.tsx  # Main page composition
-│   │   ├── Navbar.tsx
-│   │   ├── TechStack.tsx
-│   │   ├── WhatIDo.tsx
-│   │   └── Work.tsx
-│   ├── context/               # Global providers (loading state, etc.)
-│   ├── data/                  # Static data/content definitions
+│   │   ├── TechStack.tsx      # Python, SQL, ML, BI tools
+│   │   ├── WhatIDo.tsx        # Core competencies
+│   │   └── Work.tsx           # Case studies and project showcase
 │   ├── App.tsx
 │   └── main.tsx
 ├── package.json
@@ -88,89 +73,34 @@ Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.
 ### Installation
 
 1. Clone the repository:
-
    ```bash
-   git clone <your-repository-url>
-   cd 3d-portfolio
+   git clone https://github.com/h4anshu/YOUR-REPO-NAME.git
+   cd portfolio
    ```
 
 2. Install dependencies:
-
    ```bash
    npm install
    ```
 
 3. Start the local development server:
-
    ```bash
    npm run dev
    ```
 
-4. Open the URL shown in the terminal (typically `http://localhost:5173`).
-
-## Available Scripts
-
-- `npm run dev`  
-  Starts Vite dev server and exposes host for local network testing.
-
-- `npm run build`  
-  Type-checks and builds a production-ready bundle.
-
-- `npm run preview`  
-  Serves the production build locally for verification.
-
-- `npm run lint`  
-  Runs ESLint checks across the project.
-
-## GSAP License Note
-
-This project uses the standard `gsap` package, including bonus plugins now available in the core package.
-
-- Install dependencies with `npm install`.
-- If migrating from older setups, remove `gsap-trial` from your project.
-
-Read official installation guidance here: [GSAP Installation Docs](https://gsap.com/docs/v3/Installation/)
-
-## Customization Guide
-
-You can adapt this portfolio to your own profile by updating the following areas:
-
-- **Content sections**: Edit files in `src/components/` such as `About.tsx`, `Career.tsx`, `WhatIDo.tsx`, and `Work.tsx`.
-- **Data source**: Update static values in files under `src/data/`.
-- **Styling**: Modify component styles in `src/components/styles/` and global styles in `src/index.css` / `src/App.css`.
-- **3D scene behavior**: Adjust scene logic in `src/components/Character/` and related utilities.
-- **Animations**: Tweak GSAP utilities under `src/components/utils/`.
-
-## Troubleshooting
-
-- **Blank screen in development**  
-  Check browser console for module import errors and verify all dependencies are installed.
-
-- **3D performance issues on low-end devices**  
-  Reduce scene complexity and post-processing effects in the character/scene utilities.
-
-- **GSAP plugin errors**  
-  Ensure you have the correct plugin package and license configuration for your target environment.
-
-- **TypeScript build failures**  
-  Run `npm run build` and address reported type errors before deploying.
+4. Open the URL shown in your terminal (typically `http://localhost:3000`).
 
 ## Deployment
 
-1. Create a production build:
+This portfolio is optimized to be deployed seamlessly on **Vercel**. 
 
+1. Create a production build locally to verify there are no errors:
    ```bash
    npm run build
    ```
-
-2. Validate locally:
-
-   ```bash
-   npm run preview
-   ```
-
-3. Deploy the generated `dist/` folder to your hosting provider (for example Vercel, Netlify, or Cloudflare Pages).
+2. Push your code to GitHub.
+3. Log into [Vercel](https://vercel.com/) with your GitHub account, click "Add New Project", select this repository, and click **Deploy**. Vercel will automatically detect Vite and host the site!
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is available under the MIT License.
