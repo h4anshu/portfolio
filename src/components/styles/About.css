@@ -153,28 +153,26 @@
   margin: 0;
 }
 
+.profile-metrics-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 24px 0;
+  width: 100%;
+}
+
 /* ---- Metrics Grid ---- */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-bottom: 32px;
 }
 
 .metric-card {
-  background: rgba(15, 20, 35, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 16px 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: background 0.3s ease;
-}
-
-.metric-card:hover {
-  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 0;
 }
 
 .metric-label {
@@ -191,15 +189,14 @@
 }
 
 /* ---- Footer & Buttons ---- */
-.about-footer {
-  background: rgba(15, 20, 35, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  padding: 24px;
+.profile-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .about-closing {
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .about-closing p {
@@ -288,8 +285,9 @@
     width: var(--cWidth);
     justify-content: right;
     max-width: 1920px;
-    height: var(--vh);
-    padding: 0px;
+    min-height: var(--vh);
+    height: auto;
+    padding: 0px 0px 80px 0px;
     opacity: 1;
   }
   .about-me {
