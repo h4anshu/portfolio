@@ -5,9 +5,9 @@ export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
 ) {
-  let intensity: number = 0;
-  const intensityInterval = setInterval(() => {
-    intensity = Math.random();
+  let _intensity: number = 0;
+  const _intensityInterval = setInterval(() => {
+    _intensity = Math.random();
   }, 500);
   const tl1 = gsap.timeline({
     scrollTrigger: {
@@ -116,7 +116,7 @@ export function setCharTimeline(
     }
   } else {
     if (character) {
-      const tM2 = gsap.timeline({
+      gsap.timeline({
         scrollTrigger: {
           trigger: ".what-box-in",
           start: "top 70%",
