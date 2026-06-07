@@ -33,9 +33,9 @@ const WhatIDo = () => {
       {/* Left: Title */}
       <div className="what-left">
         <h2>
-          DATA
+          HOW I
           <br />
-          <span className="what-accent">PIPELINE</span>
+          <span className="what-accent">WORK</span>
         </h2>
       </div>
 

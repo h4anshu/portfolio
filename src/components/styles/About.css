@@ -69,39 +69,187 @@
   box-shadow: 0 0 10px rgba(45, 212, 191, 0.4);
 }
 
-/* ---- Bio ---- */
-.about-bio {
-  border-left: 2px solid rgba(45, 212, 191, 0.2);
-  padding-left: 24px;
+/* ---- Profile Card ---- */
+.profile-card {
+  background: rgba(15, 20, 35, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
 }
 
-.about-bio p {
-  font-size: 17px;
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(94, 234, 212, 0.15);
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accentColor);
+  font-weight: 600;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.profile-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #7a8599;
+}
+
+.profile-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: monospace;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.profile-body p {
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.8;
-  color: #e8e4ec;
-  margin: 0 0 20px 0;
+  color: #cbd5e1;
+  margin: 0;
 }
 
-.about-bio p:last-child {
-  margin-bottom: 0;
+/* ---- Metrics Grid ---- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: rgba(15, 20, 35, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: background 0.3s ease;
+}
+
+.metric-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #7a8599;
+  letter-spacing: 1px;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ---- Footer & Buttons ---- */
+.about-footer {
+  background: rgba(15, 20, 35, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.about-closing {
+  margin-bottom: 24px;
+}
+
+.about-closing p {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  color: #94a3b8;
+}
+
+.about-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  font-weight: 500;
+  color: #cbd5e1;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.about-tech-pill:hover {
+  background: rgba(94, 234, 212, 0.08);
+  border-color: rgba(94, 234, 212, 0.3);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.pill-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 .about-name {
   color: #fff;
   font-weight: 700;
-  font-size: 19px;
 }
 
 .about-em {
   color: var(--accentColor, #2dd4bf);
   font-weight: 500;
-}
-
-.about-closing {
-  font-style: italic;
-  color: #d0ccd4 !important;
-  font-size: 16px !important;
 }
 
 /* ========================================
@@ -165,8 +313,33 @@
   .about-hero-text {
     font-size: 2.2rem;
   }
-  .about-bio p {
+  .profile-body p {
     font-size: 1.15rem;
     line-height: 1.9;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .profile-badge {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-footer {
+    padding: 20px;
   }
 }
