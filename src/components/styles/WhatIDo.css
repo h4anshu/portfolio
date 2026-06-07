@@ -1,0 +1,234 @@
+/* ========================================
+   WHAT I DO — Data Pipeline (Clean Layout)
+   ======================================== */
+
+.whatIDO {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100vh;
+  width: var(--cWidth);
+  max-width: 1920px;
+  margin: auto;
+  z-index: 9;
+}
+
+/* ---- Left: Title ---- */
+.what-left {
+  width: 45%;
+  z-index: 9;
+}
+
+.what-left h2 {
+  font-size: calc(4vw + 25px);
+  line-height: calc(4vw + 20px);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.what-accent {
+  color: var(--accentColor);
+  font-style: italic;
+}
+
+/* ---- Right: Pipeline Steps ---- */
+.what-right {
+  width: 480px;
+  flex-shrink: 0;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Individual Step ---- */
+.what-step {
+  padding: 28px 30px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.what-step:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.what-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 0%;
+  background: var(--accentColor);
+  transition: height 0.4s ease;
+}
+
+.what-step-active::before {
+  height: 100%;
+}
+
+.what-step-active {
+  background: rgba(94, 234, 212, 0.03);
+}
+
+/* ---- Step Header (always visible) ---- */
+.what-step-header {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.what-step-num {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accentColor);
+  font-family: 'Courier New', 'Fira Code', monospace;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.what-step-active .what-step-num {
+  opacity: 1;
+}
+
+.what-step h3 {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 1px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.what-step-active h3 {
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(94, 234, 212, 0.2);
+}
+
+/* ---- Step Body (expandable) ---- */
+.what-step-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease 0.05s;
+  padding-left: 32px;
+}
+
+.what-step-active .what-step-body {
+  max-height: 250px;
+  opacity: 1;
+  margin-top: 14px;
+}
+
+.what-step-body p {
+  margin: 0 0 18px 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #e8e5ec;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+/* ---- Tags ---- */
+.what-step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.what-tag {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  color: #ffffff;
+  font-family: 'Courier New', 'Fira Code', monospace;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.what-step-active .what-tag {
+  border-color: rgba(94, 234, 212, 0.6);
+  background: rgba(94, 234, 212, 0.12);
+  color: #5eead4;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media only screen and (max-width: 1400px) {
+  .what-right {
+    width: 440px;
+  }
+  .what-step h3 {
+    font-size: 22px;
+  }
+  .what-step-body p {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .whatIDO {
+    height: auto;
+    padding: 60px 0;
+  }
+  .what-right {
+    width: 420px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .whatIDO {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .what-left {
+    width: 100%;
+  }
+  .what-left h2 {
+    font-size: 55px;
+    line-height: 53px;
+  }
+  .what-right {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .what-left h2 {
+    font-size: 42px;
+    line-height: 42px;
+  }
+  .what-step h3 {
+    font-size: 20px;
+  }
+  .what-step {
+    padding: 22px 20px;
+  }
+  .what-step-body p {
+    font-size: 14px;
+  }
+  .what-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}
+
+@media only screen and (min-width: 1950px) {
+  .what-left h2 {
+    font-size: 7rem;
+    line-height: 6.8rem;
+  }
+}

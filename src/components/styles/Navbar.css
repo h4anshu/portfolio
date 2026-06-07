@@ -1,0 +1,134 @@
+.header {
+  display: flex;
+  max-width: var(--cMaxWidth);
+  width: var(--cWidth);
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  margin-bottom: -100px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  z-index: 9999;
+}
+
+.header ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 40px;
+  font-size: 14px;
+}
+
+.header ul li {
+  letter-spacing: 1px;
+  color: #eae5ec;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navbar-connect {
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* ---- Logo: {A.M} ---- */
+.navbar-title {
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-family: 'Courier New', 'Fira Code', monospace;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.logo-brace {
+  color: var(--accentColor, #2dd4bf);
+  font-weight: 400;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  font-size: 22px;
+}
+
+.navbar-title:hover .logo-brace {
+  opacity: 1;
+}
+
+.logo-dot {
+  color: var(--accentColor, #2dd4bf);
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 0;
+  vertical-align: middle;
+  display: inline-block;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.7; text-shadow: none; }
+  50% { opacity: 1; text-shadow: 0 0 10px rgba(45, 212, 191, 0.8); }
+}
+
+.check-line {
+  position: fixed;
+  top: 655px;
+  left: 0;
+  height: 1px;
+  background-color: #ffffff;
+  width: 100%;
+  z-index: 99999;
+}
+
+/* ========== RESPONSIVE ========== */
+@media only screen and (max-width: 500px) {
+  .header ul {
+    gap: 20px;
+    font-size: 12px;
+  }
+  .navbar-title {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .navbar-connect {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .header {
+    padding: 35px 0px;
+  }
+  .header ul {
+    gap: 80px;
+    font-size: 16px;
+  }
+  .navbar-connect {
+    font-size: 16px;
+  }
+  .navbar-title {
+    font-size: 28px;
+  }
+  .logo-brace {
+    font-size: 26px;
+  }
+  .logo-dot {
+    font-size: 32px;
+  }
+}

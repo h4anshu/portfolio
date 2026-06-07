@@ -1,0 +1,407 @@
+/* ========================================
+   CONTACT NODE GRAPH — Interactive Network
+   ======================================== */
+
+.contact-section {
+  margin: auto;
+  padding-bottom: 60px;
+  margin-top: 100px;
+  position: relative;
+  z-index: 2;
+  background-color: var(--backgroundColor);
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Canvas layer for animated connection lines */
+.contact-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---- Header ---- */
+.contact-header {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+}
+
+.contact-header h3 {
+  font-size: 42px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  margin: 0;
+  color: #eae5ec;
+}
+
+.contact-brace {
+  color: var(--accentColor);
+  font-family: 'Courier New', 'Fira Code', monospace;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* ========================================
+   CENTER NODE — The "You" Hub
+   ======================================== */
+.node-center {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.node-center-inner {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1a2a3a, #0a0e17);
+  border: 2px solid rgba(94, 234, 212, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  box-shadow:
+    0 0 30px rgba(94, 234, 212, 0.15),
+    inset 0 0 20px rgba(94, 234, 212, 0.05);
+}
+
+.node-center-label {
+  font-family: 'Courier New', 'Fira Code', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accentColor);
+  letter-spacing: 1px;
+}
+
+.node-center-ring {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px dashed rgba(94, 234, 212, 0.25);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ringRotate 20s linear infinite;
+  z-index: 1;
+}
+
+.node-center-pulse {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: centerPulse 3s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes ringRotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes centerPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   CONTACT NODES — Floating Orbiting Items
+   ======================================== */
+.node-item {
+  position: absolute;
+  left: var(--node-x);
+  top: var(--node-y);
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  opacity: 0;
+  animation: nodeAppear 0.8s ease forwards;
+  animation-delay: var(--delay);
+}
+
+.contact-visible .node-item {
+  animation: nodeAppear 0.8s ease forwards, nodeFloat 6s ease-in-out infinite;
+  animation-delay: var(--delay), calc(var(--delay) + 0.8s);
+}
+
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes nodeFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+  33% { transform: translate(-50%, -50%) translateY(-8px) translateX(3px); }
+  66% { transform: translate(-50%, -50%) translateY(5px) translateX(-3px); }
+}
+
+/* ---- Node Link / Card ---- */
+.node-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px;
+  border-radius: 16px;
+  background: rgba(15, 20, 35, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(94, 234, 212, 0.12);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+  color: #eae5ec;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.node-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(94, 234, 212, 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.node-active .node-link {
+  border-color: rgba(94, 234, 212, 0.5);
+  background: rgba(15, 25, 40, 0.85);
+  box-shadow:
+    0 0 25px rgba(94, 234, 212, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: scale(1.08);
+}
+
+.node-active .node-link::before {
+  opacity: 1;
+}
+
+/* ---- Node Icon ---- */
+.node-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(94, 234, 212, 0.1);
+  border: 1px solid rgba(94, 234, 212, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--accentColor);
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+.node-active .node-icon {
+  background: rgba(94, 234, 212, 0.2);
+  border-color: rgba(94, 234, 212, 0.5);
+  box-shadow: 0 0 15px rgba(94, 234, 212, 0.2);
+  transform: rotate(5deg);
+}
+
+/* ---- Node Text Info ---- */
+.node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s ease 0.1s;
+}
+
+.node-active .node-info {
+  max-width: 280px;
+  opacity: 1;
+}
+
+.node-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accentColor);
+  opacity: 0.8;
+}
+
+.node-detail {
+  font-size: 14px;
+  font-weight: 400;
+  color: #c8c2cc;
+  white-space: nowrap;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.contact-footer {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.contact-footer p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(234, 229, 236, 0.5);
+}
+
+.contact-footer p span {
+  color: var(--accentColor);
+  font-weight: 500;
+}
+
+.contact-copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 6px !important;
+  font-size: 13px !important;
+  opacity: 0.4;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media only screen and (max-width: 1300px) {
+  .contact-header h3 {
+    font-size: 34px;
+    letter-spacing: 4px;
+  }
+  .node-center-inner {
+    width: 90px;
+    height: 90px;
+  }
+  .node-center-label {
+    font-size: 18px;
+  }
+  .node-center-ring {
+    width: 115px;
+    height: 115px;
+  }
+  .node-center-pulse {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .contact-section {
+    min-height: 80vh;
+    margin-top: 50px;
+    padding-bottom: 40px;
+  }
+  .contact-header h3 {
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+  .node-center-inner {
+    width: 75px;
+    height: 75px;
+  }
+  .node-center-label {
+    font-size: 15px;
+  }
+  .node-center-ring {
+    width: 100px;
+    height: 100px;
+  }
+  .node-center-pulse {
+    width: 75px;
+    height: 75px;
+  }
+  .node-link {
+    padding: 10px 16px;
+    border-radius: 12px;
+    gap: 10px;
+  }
+  .node-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+  .node-detail {
+    font-size: 12px;
+  }
+  .node-label {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .contact-header h3 {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  .node-center-inner {
+    width: 60px;
+    height: 60px;
+  }
+  .node-center-label {
+    font-size: 13px;
+  }
+  .node-center-ring {
+    width: 82px;
+    height: 82px;
+  }
+  .node-center-pulse {
+    width: 60px;
+    height: 60px;
+  }
+  .node-link {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .node-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+  .contact-footer p {
+    font-size: 12px;
+  }
+}
