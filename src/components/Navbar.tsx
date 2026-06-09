@@ -89,23 +89,30 @@ const Navbar = () => {
         <a href="/#" className="navbar-title" data-cursor="disable">
           <span className="logo-brace">{"{"}  </span>A<span className="logo-dot">.</span>M<span className="logo-brace">  {"}"}  </span>
         </a>
-        <ul>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#work" href="#work">
-              <HoverLinks text="WORK" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#contact" href="#contact">
-              <HoverLinks text="CONTACT" />
-            </a>
-          </li>
-        </ul>
+        <div className="nav-panel">
+          <ul>
+            <li>
+              <a data-href="#about" href="#about">
+                <HoverLinks text="ABOUT" />
+              </a>
+            </li>
+            <li>
+              <a data-href="#work" href="#work">
+                <HoverLinks text="WORK" />
+              </a>
+            </li>
+            <li>
+              <a data-href="#contact" href="#contact">
+                <HoverLinks text="CONTACT" />
+              </a>
+            </li>
+            <li>
+              <a href="/Data Analyst Intern.pdf" target="_blank" rel="noreferrer" className="nav-resume-btn">
+                RESUME
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className="landing-circle1"></div>
