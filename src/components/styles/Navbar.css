@@ -130,12 +130,27 @@
 
 /* ========== RESPONSIVE ========== */
 @media only screen and (max-width: 500px) {
+  .nav-panel {
+    padding: 6px 14px;
+  }
   .header ul {
-    gap: 20px;
-    font-size: 12px;
+    gap: 10px;
+    font-size: 11px;
   }
   .navbar-title {
-    font-size: 20px;
+    font-size: 18px;
+  }
+  .nav-resume-btn {
+    padding: 4px 10px;
+    font-size: 10px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+  .logo-brace {
+    font-size: 16px;
+  }
+  .logo-dot {
+    font-size: 22px;
   }
 }
 

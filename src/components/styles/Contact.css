@@ -278,6 +278,7 @@
   transform: translateX(-50%);
   text-align: center;
   z-index: 5;
+  white-space: nowrap;
 }
 
 .contact-footer p {
