@@ -17,6 +17,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
     window.innerWidth > 1024
   );
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -25,8 +26,17 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     };
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
+
+    const scrollHandler = () => {
+      // Check if user is within 100px of the bottom of the document
+      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+      setIsAtBottom(isBottom);
+    };
+    window.addEventListener("scroll", scrollHandler);
+
     return () => {
       window.removeEventListener("resize", resizeHandler);
+      window.removeEventListener("scroll", scrollHandler);
     };
   }, [isDesktopView]);
 
@@ -35,7 +45,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Cursor />
       <Navbar />
       <SocialIcons />
-      <div className="scroll-indicator" aria-hidden="true">
+      <div className={`scroll-indicator ${isAtBottom ? 'hidden' : ''}`} aria-hidden="true">
         <div className="scroll-mouse">
           <div className="scroll-dot"></div>
         </div>

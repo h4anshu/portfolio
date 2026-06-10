@@ -487,6 +487,12 @@ h2.landing-info-h2 {
   align-items: center;
   gap: 10px;
   pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .scroll-mouse {
