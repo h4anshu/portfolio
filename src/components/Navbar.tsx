@@ -54,7 +54,7 @@ const Navbar = () => {
       }
     }
 
-    let links = document.querySelectorAll(".header ul a");
+    let links = document.querySelectorAll(".header ul a:not(.nav-resume-btn)");
     const handleClick = (e: Event) => {
       if (window.innerWidth > 1024) {
         e.preventDefault();
