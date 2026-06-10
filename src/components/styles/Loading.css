@@ -217,7 +217,7 @@
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
 }
 .loader-title .logo-brace {
   color: #2dd4bf;

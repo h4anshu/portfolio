@@ -110,7 +110,7 @@
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 4px;
-  font-family: "Courier New", "Fira Code", monospace;
+  font-family: var(--font-mono);
   backdrop-filter: blur(8px);
 }
 
@@ -181,7 +181,7 @@
   font-size: 28px;
   font-weight: 500;
   color: #fff;
-  font-family: "Geist", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   line-height: 1.2;
 }
 

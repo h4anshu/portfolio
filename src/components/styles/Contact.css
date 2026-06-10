@@ -48,7 +48,7 @@
 
 .contact-brace {
   color: var(--accentColor);
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-weight: 400;
   opacity: 0.7;
 }
@@ -81,7 +81,7 @@
 }
 
 .node-center-label {
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: 22px;
   font-weight: 700;
   color: var(--accentColor);

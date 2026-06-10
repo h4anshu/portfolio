@@ -40,7 +40,7 @@
   font-weight: 500;
   letter-spacing: 3px;
   color: var(--accentColor);
-  font-family: "Courier New", "Fira Code", monospace;
+  font-family: var(--font-mono);
   display: block;
   margin-bottom: 12px;
 }
@@ -87,7 +87,7 @@
   color: #94a3b8;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: "Geist", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .filter-pill:hover {

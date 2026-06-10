@@ -82,7 +82,7 @@
   font-weight: 800;
   font-size: 24px;
   letter-spacing: 1px;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   text-decoration: none;
   color: #fff;
   display: flex;

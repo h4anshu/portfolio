@@ -86,7 +86,7 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--accentColor);
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 2px;
   opacity: 0.6;
   transition: opacity 0.3s ease;
@@ -151,7 +151,7 @@
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 20px;
   color: #ffffff;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.5px;
   transition: all 0.3s ease;
 }

@@ -130,7 +130,7 @@
   font-size: 24px;
   font-weight: 700;
   color: var(--accentColor);
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
 }
 
 .cert-ring {
@@ -162,7 +162,7 @@
   color: var(--accentColor);
   margin-bottom: 12px;
   opacity: 0.7;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
 }
 
 .cert-card:hover .cert-unlocked-tag {
@@ -202,7 +202,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #fbbf24;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   letter-spacing: 1px;
   text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
@@ -223,7 +223,7 @@
   font-size: 15px;
   color: #c0bcc5;
   margin: 0 0 18px 0;
-  font-family: 'Courier New', 'Fira Code', monospace;
+  font-family: var(--font-mono);
 }
 
 /* ---- Credential Link ---- */
