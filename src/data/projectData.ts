@@ -38,7 +38,7 @@ export const projects: ProjectData[] = [
       "Business insights",
       "Dashboard delivery",
     ],
-    image: "/images/ecommerce-dashboard.png",
+    image: "/images/ecommerce-dashboard.webp",
     github: "https://github.com/h4anshu/E-Commerce-Analysis",
   },
   {
@@ -62,7 +62,7 @@ export const projects: ProjectData[] = [
       "Evaluation",
       "Streamlit deployment",
     ],
-    image: "/images/cropyield-app.png",
+    image: "/images/cropyield-app.webp",
     github: "https://github.com/h4anshu/Predicting-Crop-Yield-Using-Soil-and-Weather-Data",
     live: "https://predicting-crop-yield-using-soil-an.vercel.app/",
   },
@@ -86,7 +86,7 @@ export const projects: ProjectData[] = [
       "Dashboard delivery",
       "Executive reporting",
     ],
-    image: "/images/hospital-dashboard.png",
+    image: "/images/hospital-dashboard.webp",
     github: "https://github.com/h4anshu/Hospital-Management-Analytics-Dashboard",
   },
   {
@@ -109,7 +109,7 @@ export const projects: ProjectData[] = [
       "Recommendations",
       "Executive dashboard",
     ],
-    image: "/images/superstore-dashboard.png",
+    image: "/images/superstore-dashboard.webp",
     github: "https://github.com/h4anshu/Superstore-Sales-analysis",
   },
   {

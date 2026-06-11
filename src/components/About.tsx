@@ -64,16 +64,16 @@ const About = () => {
             
             <div className="about-tech-pills">
               <span className="about-tech-pill">
-                <img src="/images/python.png" alt="Python" className="pill-icon" /> Python
+                <img src="/images/python.webp" alt="Python" className="pill-icon" /> Python
               </span>
               <span className="about-tech-pill">
-                <img src="/images/sql.png" alt="SQL" className="pill-icon" /> SQL
+                <img src="/images/sql.webp" alt="SQL" className="pill-icon" /> SQL
               </span>
               <span className="about-tech-pill">
-                <img src="/images/sklearn.png" alt="ML" className="pill-icon" /> Machine Learning
+                <img src="/images/sklearn.webp" alt="ML" className="pill-icon" /> Machine Learning
               </span>
               <span className="about-tech-pill">
-                <img src="/images/powerbi.png" alt="Data" className="pill-icon" /> Data Analysis
+                <img src="/images/powerbi.webp" alt="Data" className="pill-icon" /> Data Analysis
               </span>
             </div>
           </div>

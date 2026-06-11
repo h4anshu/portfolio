@@ -13,16 +13,16 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/python.png",
-  "/images/sql.png",
-  "/images/powerbi.png",
-  "/images/tableau.png",
-  "/images/pandas.png",
-  "/images/sklearn.png",
-  "/images/excel.png",
-  "/images/jupyter.png",
-  "/images/java.png",
-  "/images/aws.png",
+  "/images/python.webp",
+  "/images/sql.webp",
+  "/images/powerbi.webp",
+  "/images/tableau.webp",
+  "/images/pandas.webp",
+  "/images/sklearn.webp",
+  "/images/excel.webp",
+  "/images/jupyter.webp",
+  "/images/java.webp",
+  "/images/aws.webp",
 ];
 const textures = imageUrls.map((url) => {
   const tex = textureLoader.load(url);
