@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
   Physics,
@@ -195,7 +194,7 @@ const TechStack = () => {
             shadow-mapSize={[512, 512]}
           />
           <directionalLight position={[0, 5, -4]} intensity={2} />
-          <Physics gravity={[0, 0, 0]}>
+          <Physics gravity={[0, 0, 0]} paused={!isActive} timeStep="vary">
             <Pointer isActive={isActive} />
             {spheres.map((props, i) => (
               <SphereGeo
@@ -211,9 +210,6 @@ const TechStack = () => {
             environmentIntensity={0.5}
             environmentRotation={[0, 4, 2]}
           />
-          <EffectComposer enableNormalPass={false}>
-            <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-          </EffectComposer>
         </Canvas>
       )}
 

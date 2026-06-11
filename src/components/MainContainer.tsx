@@ -1,4 +1,4 @@
-import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import { lazy, PropsWithChildren, Suspense, useEffect, useState, useRef } from "react";
 import About from "./About";
 import Career from "./Career";
 import Certifications from "./Certifications";
@@ -12,6 +12,35 @@ import Work from "./Work";
 import setSplitText from "./utils/splitText";
 
 const TechStack = lazy(() => import("./TechStack"));
+
+const TechStackWrapper = () => {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px" } // Start loading when 600px away
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} style={{ minHeight: "800px", width: "100%", position: "relative" }}>
+      {shouldLoad ? (
+        <Suspense fallback={<div style={{height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>Loading Environment...</div>}>
+          <TechStack />
+        </Suspense>
+      ) : null}
+    </div>
+  );
+};
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
@@ -61,9 +90,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Career />
             <Certifications />
             <Work />
-            <Suspense fallback={<div>Loading....</div>}>
-              <TechStack />
-            </Suspense>
+            <TechStackWrapper />
             <Contact />
           </div>
         </div>
