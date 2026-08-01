@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
@@ -16,16 +16,20 @@ import { setProgress } from "../Loading";
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef(new THREE.Scene());
   const { setLoading } = useLoading();
 
-  const [character, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
       let container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
-      const scene = sceneRef.current;
+      // Scene is per-effect-run, not a ref. StrictMode mounts twice in dev and
+      // a shared scene ended up holding both runs' characters.
+      const scene = new THREE.Scene();
+      // loadCharacter() is async and can resolve after cleanup; without this
+      // the torn-down run still added its character (and a second 2.3MB
+      // decode) into the scene, where nothing was left to animate it.
+      let cancelled = false;
 
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -54,12 +58,11 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       loadCharacter().then((gltf) => {
-        if (gltf) {
+        if (gltf && !cancelled) {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
           let character = gltf.scene;
-          setChar(character);
           scene.add(character);
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
@@ -69,11 +72,23 @@ const Scene = () => {
               animations.startIntro();
             }, 2500);
           });
-          window.addEventListener("resize", () =>
-            handleResize(renderer, camera, canvasDiv, character)
-          );
+          // Debounced: handleResize kills and rebuilds every ScrollTrigger
+          // timeline, far too heavy to run on each raw resize event.
+          onResize = () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(
+              () => handleResize(renderer, camera, canvasDiv, character),
+              200
+            );
+          };
+          window.addEventListener("resize", onResize);
         }
       });
+
+      // Assigned once the character loads; kept out here so cleanup can remove
+      // the exact same reference (an inline arrow never detached).
+      let onResize: (() => void) | null = null;
+      let resizeTimer: number | undefined;
 
       let mouse = { x: 0, y: 0 },
         interpolation = { x: 0.1, y: 0.2 };
@@ -113,8 +128,9 @@ const Scene = () => {
       );
       if (canvasDiv.current) observer.observe(canvasDiv.current);
 
+      let rafId = 0;
       const animate = () => {
-        requestAnimationFrame(animate);
+        rafId = requestAnimationFrame(animate);
         if (!isVisible) return;
 
         if (headBone) {
@@ -136,12 +152,15 @@ const Scene = () => {
       };
       animate();
       return () => {
+        cancelled = true;
+        progress.stop();
         clearTimeout(debounce);
+        clearTimeout(resizeTimer);
+        cancelAnimationFrame(rafId);
+        observer.disconnect();
         scene.clear();
         renderer.dispose();
-        window.removeEventListener("resize", () =>
-          handleResize(renderer, camera, canvasDiv, character!)
-        );
+        if (onResize) window.removeEventListener("resize", onResize);
         if (canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
         }

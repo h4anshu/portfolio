@@ -97,7 +97,11 @@
   box-shadow: inset -50px 40px 50px rgba(0, 180, 180, 0.6);
   filter: blur(60px);
   border-radius: 50%;
-  animation: loadingCircle 5s linear infinite;
+  /* Was `animation: loadingCircle 5s linear infinite`. A fixed, blur(60px)
+     element rotating forever keeps a large composited layer live for the whole
+     session; static lets the compositor cache it. Rotation on a 60px-blurred
+     blob is imperceptible anyway. Transform inlined from the old keyframe. */
+  transform: translate(-95%, -75%);
 }
 
 .nav-fade {
@@ -114,16 +118,6 @@
   left: 0;
 }
 
-@keyframes loadingCircle {
-  0% {
-    transform: translate(-95%, -75%) rotateZ(0deg);
-  }
-
-  100% {
-    transform: translate(-95%, -75%) rotateZ(360deg);
-  }
-}
-
 .landing-circle2 {
   top: 50%;
   right: 0%;
@@ -137,13 +131,7 @@
   box-shadow: inset -50px 40px 50px rgba(0, 180, 180, 0.6);
   filter: blur(50px);
   border-radius: 50%;
-  animation: loadingCircle2 5s linear infinite;
-}
-
-@keyframes loadingCircle2 {
-  100% {
-    transform: translate(calc(100% - 2px), -50%) rotate(360deg);
-  }
+  /* Static for the same reason as .landing-circle1 above. */
 }
 
 .landing-video,

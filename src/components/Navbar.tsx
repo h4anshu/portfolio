@@ -68,13 +68,17 @@ const Navbar = () => {
       elem.addEventListener("click", handleClick);
     });
 
+    // Debounced: a full ScrollSmoother refresh re-measures every trigger.
+    let resizeTimer: number | undefined;
     const handleResize = () => {
-      ScrollSmoother.refresh(true);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => ScrollSmoother.refresh(true), 200);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       links.forEach((elem) => elem.removeEventListener("click", handleClick));
+      clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
       if (smoother) {
         // Save current scroll position before killing

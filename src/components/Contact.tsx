@@ -72,17 +72,18 @@ const Contact = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeNode, setActiveNode] = useState<string | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  // hasAppeared is sticky (entrance plays once); inView is live and gates both
+  // the canvas loop and the infinite CSS float/pulse animations.
+  const [hasAppeared, setHasAppeared] = useState(false);
+  const [inView, setInView] = useState(false);
 
-  // Intersection observer for entrance animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting) setHasAppeared(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.05 }
     );
     if (containerRef.current) observer.observe(containerRef.current);
     return () => observer.disconnect();
@@ -92,9 +93,9 @@ const Contact = () => {
   const activeNodeRef = useRef<string | null>(null);
   activeNodeRef.current = activeNode;
 
-  // Canvas for animated connection lines — ONLY runs when section is visible
+  // Canvas for animated connection lines — only runs while actually on screen
   useEffect(() => {
-    if (!isVisible) return;
+    if (!inView) return;
 
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -103,6 +104,17 @@ const Contact = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Size via ResizeObserver instead of getBoundingClientRect() per frame,
+    // which forced a synchronous layout on every single frame.
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      canvas.width = Math.floor(rect.width);
+      canvas.height = Math.floor(rect.height);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(container);
+
     let animFrame: number;
     let time = 0;
 
@@ -110,13 +122,6 @@ const Contact = () => {
     const centerY = 48;
 
     const draw = () => {
-      const rect = container.getBoundingClientRect();
-
-      if (canvas.width !== Math.floor(rect.width) || canvas.height !== Math.floor(rect.height)) {
-        canvas.width = Math.floor(rect.width);
-        canvas.height = Math.floor(rect.height);
-      }
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const cx = (centerX / 100) * canvas.width;
@@ -195,12 +200,17 @@ const Contact = () => {
     };
 
     draw();
-    return () => cancelAnimationFrame(animFrame);
-  }, [isVisible]);
+    return () => {
+      cancelAnimationFrame(animFrame);
+      ro.disconnect();
+    };
+  }, [inView]);
 
   return (
     <div
-      className={`contact-section section-container ${isVisible ? "contact-visible" : ""}`}
+      className={`contact-section section-container ${
+        hasAppeared ? "contact-visible" : ""
+      } ${inView ? "contact-inview" : ""}`}
       id="contact"
       ref={containerRef}
     >

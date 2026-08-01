@@ -48,26 +48,38 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   );
   const [isAtBottom, setIsAtBottom] = useState(false);
 
+  const bottomSentinel = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    setSplitText();
+    setIsDesktopView(window.innerWidth > 1024);
+
+    // Debounced: setSplitText re-splits every .para/.title into per-word nodes.
+    let resizeTimer: number | undefined;
     const resizeHandler = () => {
-      setSplitText();
-      setIsDesktopView(window.innerWidth > 1024);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setSplitText();
+        setIsDesktopView(window.innerWidth > 1024);
+      }, 200);
     };
-    resizeHandler();
     window.addEventListener("resize", resizeHandler);
 
-    const scrollHandler = () => {
-      // Check if user is within 100px of the bottom of the document
-      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
-      setIsAtBottom(isBottom);
-    };
-    window.addEventListener("scroll", scrollHandler);
+    // Sentinel instead of a scroll listener that read scrollHeight every
+    // event — that forced a synchronous layout on each of ScrollSmoother's
+    // continuous scroll events.
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsAtBottom(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    if (bottomSentinel.current) observer.observe(bottomSentinel.current);
 
     return () => {
+      clearTimeout(resizeTimer);
       window.removeEventListener("resize", resizeHandler);
-      window.removeEventListener("scroll", scrollHandler);
+      observer.disconnect();
     };
-  }, [isDesktopView]);
+  }, []);
 
   return (
     <div className="container-main">
@@ -92,6 +104,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Work />
             <TechStackWrapper />
             <Contact />
+            <div ref={bottomSentinel} aria-hidden="true" />
           </div>
         </div>
       </div>

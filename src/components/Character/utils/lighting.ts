@@ -20,7 +20,9 @@ const setLighting = (scene: THREE.Scene) => {
 
   new RGBELoader()
     .setPath("/models/")
-    .load("char_enviorment.hdr?v=2", function (texture) {
+    // No cache-busting query: TechStack requests the same file without one,
+    // and a mismatched URL meant two 292KB downloads instead of one.
+    .load("char_enviorment.hdr", function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
       scene.environmentIntensity = 0;

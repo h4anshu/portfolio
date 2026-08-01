@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import gsap from "gsap";
 
+// setCharTimeline re-runs on every resize; without holding a reference the
+// repeat:-1 timeline below stacked up, leaving N infinite timelines all
+// animating the same material forever.
+let screenLightTl: gsap.core.Timeline | null = null;
+
 export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
@@ -49,7 +54,8 @@ export function setCharTimeline(
       object.material.transparent = true;
       object.material.opacity = 0;
       object.material.emissive.set("#B0F5EA");
-      gsap.timeline({ repeat: -1 }).to(object.material, {
+      screenLightTl?.kill();
+      screenLightTl = gsap.timeline({ repeat: -1 }).to(object.material, {
         emissiveIntensity: 4,
         duration: 0.4,
         yoyo: true,

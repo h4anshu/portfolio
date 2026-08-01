@@ -148,6 +148,14 @@
   animation-delay: var(--delay), calc(var(--delay) + 0.8s);
 }
 
+/* Stop the infinite float/ring/pulse burning frames while the section is
+   scrolled out of view. Paused (not removed) so nothing resets or re-pops. */
+.contact-section:not(.contact-inview) .node-item,
+.contact-section:not(.contact-inview) .node-center-ring,
+.contact-section:not(.contact-inview) .node-center-pulse {
+  animation-play-state: paused;
+}
+
 @keyframes nodeAppear {
   from {
     opacity: 0;
@@ -172,9 +180,10 @@
   gap: 14px;
   padding: 14px 22px;
   border-radius: 16px;
-  background: rgba(15, 20, 35, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  /* Opaque fill instead of backdrop-filter: these 5 cards run an infinite
+     float animation, and a blurred backdrop on a continuously animating
+     element forces the compositor to re-sample + re-blur every frame. */
+  background: rgba(15, 20, 35, 0.88);
   border: 1px solid rgba(94, 234, 212, 0.12);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-decoration: none;
