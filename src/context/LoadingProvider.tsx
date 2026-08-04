@@ -17,13 +17,19 @@ interface LoadingType {
 export const LoadingContext = createContext<LoadingType | null>(null);
 
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
-  // Loading progress only advances via the 3D character's load callback
-  // (see Scene.tsx), so anywhere that character is skipped must also skip
-  // the loading screen or it hangs forever waiting for a callback that
-  // never fires.
-  const skipsCharacter = window.innerWidth < 768 || isLowPowerDevice();
-  const [isLoading, setIsLoading] = useState(!skipsCharacter);
-  const [loading, setLoading] = useState(skipsCharacter ? 100 : 0);
+  // Loading progress normally advances via the 3D character's load callback
+  // (see Scene.tsx). Mobile CSS doesn't need the Loading component's reveal
+  // effects at all, so it skips mounting Loading entirely. Desktop-width
+  // low-power devices still skip the character, but their layout depends on
+  // Loading's own completion effect (initialFX: unpauses ScrollSmoother,
+  // enables scroll, reveals hero text) — so Loading must still mount and
+  // just start already at 100% instead of waiting on a callback that will
+  // never fire.
+  const isMobile = window.innerWidth < 768;
+  const [isLoading, setIsLoading] = useState(!isMobile);
+  const [loading, setLoading] = useState(
+    isMobile || isLowPowerDevice() ? 100 : 0
+  );
 
   const value = {
     isLoading,
