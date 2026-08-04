@@ -46,9 +46,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
     window.innerWidth > 1024
   );
-  const [isAtBottom, setIsAtBottom] = useState(false);
-
-  const bottomSentinel = useRef<HTMLDivElement>(null);
+  // The "scroll down" hint only makes sense while the hero is on screen —
+  // hide it as soon as the hero scrolls out of view, rather than waiting for
+  // an exact-bottom-of-page sentinel (fragile: depends on ScrollSmoother's
+  // measured scroll range staying perfectly in sync with real content height).
+  const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
     setSplitText();
@@ -65,14 +67,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     };
     window.addEventListener("resize", resizeHandler);
 
-    // Sentinel instead of a scroll listener that read scrollHeight every
-    // event — that forced a synchronous layout on each of ScrollSmoother's
-    // continuous scroll events.
+    const landingDiv = document.getElementById("landingDiv");
     const observer = new IntersectionObserver(
-      ([entry]) => setIsAtBottom(entry.isIntersecting),
-      { rootMargin: "100px" }
+      ([entry]) => setPastHero(!entry.isIntersecting)
     );
-    if (bottomSentinel.current) observer.observe(bottomSentinel.current);
+    if (landingDiv) observer.observe(landingDiv);
 
     return () => {
       clearTimeout(resizeTimer);
@@ -86,7 +85,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Cursor />
       <Navbar />
       <SocialIcons />
-      <div className={`scroll-indicator ${isAtBottom ? 'hidden' : ''}`} aria-hidden="true">
+      <div className={`scroll-indicator ${pastHero ? 'hidden' : ''}`} aria-hidden="true">
         <div className="scroll-mouse">
           <div className="scroll-dot"></div>
         </div>
@@ -104,11 +103,6 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Work />
             <TechStackWrapper />
             <Contact />
-            <div
-              ref={bottomSentinel}
-              aria-hidden="true"
-              style={{ height: "1px" }}
-            />
           </div>
         </div>
       </div>

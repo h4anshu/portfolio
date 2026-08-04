@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
@@ -11,6 +11,7 @@ export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   const { isLoading } = useLoading();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -68,14 +69,17 @@ const Navbar = () => {
       }
     }
 
-    let links = document.querySelectorAll(".header ul a:not(.nav-resume-btn)");
+    let links = document.querySelectorAll(".header ul a");
     const handleClick = (e: Event) => {
       if (window.innerWidth > 1024) {
-        e.preventDefault();
-        let elem = e.currentTarget as HTMLAnchorElement;
-        let section = elem.getAttribute("data-href");
-        smoother.scrollTo(section, true, "top top");
+        const elem = e.currentTarget as HTMLAnchorElement;
+        if (!elem.classList.contains("nav-resume-btn")) {
+          e.preventDefault();
+          const section = elem.getAttribute("data-href");
+          smoother.scrollTo(section, true, "top top");
+        }
       }
+      setIsMenuOpen(false);
     };
 
     links.forEach((elem) => {
@@ -87,6 +91,7 @@ const Navbar = () => {
     const handleResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => ScrollSmoother.refresh(true), 200);
+      if (window.innerWidth > 768) setIsMenuOpen(false);
     };
     window.addEventListener("resize", handleResize);
 
@@ -107,7 +112,18 @@ const Navbar = () => {
         <a href="/#" className="navbar-title" data-cursor="disable">
           <span className="logo-brace">{"{"}  </span>A<span className="logo-dot">.</span>M<span className="logo-brace">  {"}"}  </span>
         </a>
-        <div className="nav-panel">
+        <button
+          type="button"
+          className={`nav-toggle ${isMenuOpen ? "open" : ""}`}
+          onClick={() => setIsMenuOpen((open) => !open)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div className={`nav-panel ${isMenuOpen ? "open" : ""}`}>
           <ul>
             <li>
               <a data-href="#about" href="#about">
