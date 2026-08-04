@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import isLowPowerDevice from "./components/utils/deviceCapability";
 
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
@@ -9,6 +10,7 @@ import { LoadingProvider } from "./context/LoadingProvider";
 
 const HomePage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [skip3D] = useState(isLowPowerDevice);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -19,7 +21,7 @@ const HomePage = () => {
   return (
     <Suspense>
       <MainContainer>
-        {!isMobile && (
+        {!isMobile && !skip3D && (
           <Suspense>
             <CharacterModel />
           </Suspense>

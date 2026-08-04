@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
+import isLowPowerDevice from "./utils/deviceCapability";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import {
@@ -33,7 +34,7 @@ const textures = imageUrls.map((url) => {
 
 const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
 
-const spheres = [...Array(20)].map(() => ({
+const spheres = [...Array(12)].map(() => ({
   scale: [0.9, 1.2, 1.0, 1.2, 1.1][Math.floor(Math.random() * 5)],
 }));
 
@@ -160,11 +161,12 @@ const TechStack = () => {
         })
     );
   }, []);
+  const [skip3D] = useState(isLowPowerDevice);
 
   return (
     <div className="techstack" ref={containerRef}>
 
-      {window.innerWidth > 1024 && (
+      {window.innerWidth > 1024 && !skip3D && (
         <Canvas
           dpr={1}
           frameloop={isActive ? "always" : "never"}
