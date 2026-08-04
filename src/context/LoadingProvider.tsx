@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import Loading from "../components/Loading";
+import isLowPowerDevice from "../components/utils/deviceCapability";
 
 interface LoadingType {
   isLoading: boolean;
@@ -16,9 +17,13 @@ interface LoadingType {
 export const LoadingContext = createContext<LoadingType | null>(null);
 
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
-  const isMobile = window.innerWidth < 768;
-  const [isLoading, setIsLoading] = useState(!isMobile);
-  const [loading, setLoading] = useState(isMobile ? 100 : 0);
+  // Loading progress only advances via the 3D character's load callback
+  // (see Scene.tsx), so anywhere that character is skipped must also skip
+  // the loading screen or it hangs forever waiting for a callback that
+  // never fires.
+  const skipsCharacter = window.innerWidth < 768 || isLowPowerDevice();
+  const [isLoading, setIsLoading] = useState(!skipsCharacter);
+  const [loading, setLoading] = useState(skipsCharacter ? 100 : 0);
 
   const value = {
     isLoading,
