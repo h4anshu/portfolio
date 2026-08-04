@@ -33,6 +33,20 @@ const Navbar = () => {
       smoother.scrollTo(0, false);
     }
 
+    // Web fonts swapping in after ScrollSmoother's initial measurement shift
+    // page height without firing a resize event, leaving the smoother's
+    // scroll range a few pixels short of the real content (bottom sentinel
+    // stays permanently unreachable). Re-measure once fonts + full page load
+    // have actually settled.
+    Promise.all([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      document.readyState === "complete"
+        ? Promise.resolve()
+        : new Promise<void>((resolve) =>
+            window.addEventListener("load", () => resolve(), { once: true })
+          ),
+    ]).then(() => ScrollSmoother.refresh());
+
     if (isMobile) {
       // On mobile, no loading screen — immediately enable scrolling and show content
       document.body.style.overflowY = "auto";
