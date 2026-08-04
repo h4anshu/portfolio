@@ -104,7 +104,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Work />
             <TechStackWrapper />
             <Contact />
-            <div ref={bottomSentinel} aria-hidden="true" />
+            <div
+              ref={bottomSentinel}
+              aria-hidden="true"
+              style={{ height: "1px" }}
+            />
           </div>
         </div>
       </div>
