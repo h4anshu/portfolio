@@ -21,7 +21,7 @@ const Career = () => {
               <h3>NOW</h3>
             </div>
             <p>
-              Authored and presented a multi-source ML framework for crop yield prediction across 29 Indian states and 22 crops over 24 years — achieving R²=0.9506. Awarded Best Paper at ADG 2026.
+              Authored and presented a multi-source ML framework for crop yield prediction across Indian states and crops — awarded Best Paper at ADG 2026. Then rebuilt it as a district-level outlook for 751 districts and 63 crops, benchmarked against a naive baseline.
             </p>
           </div>
           <div className="career-info-box">
